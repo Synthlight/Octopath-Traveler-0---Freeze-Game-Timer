@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"Stop The Game Timer (ApplicationStateManager (+470, Timer, Int))"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript Async="1">{ Game   : Octopath_Traveler0-Win64-Shipping.exe
+  Version:
+  Date   : 2025-11-28
+  Author : LordGregory
+}
+
+[ENABLE]
+
+aobscanmodule(STOP_GAME_TIMER,Octopath_Traveler0-Win64-Shipping.exe,03 87 70 04 00 00 3B) // should be unique
+
+STOP_GAME_TIMER:
+  //add eax,[rdi+00000470]
+  mov eax,[rdi+00000470]
+
+registersymbol(STOP_GAME_TIMER)
+
+[DISABLE]
+
+STOP_GAME_TIMER:
+  db 03 87 70 04 00 00
+
+unregistersymbol(STOP_GAME_TIMER)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Octopath_Traveler0-Win64-Shipping.exe+47BB326
+
+Octopath_Traveler0-Win64-Shipping.exe+47BB2F9: 0F 28 CA                       - movaps xmm1,xmm2
+Octopath_Traveler0-Win64-Shipping.exe+47BB2FC: 48 89 5C 24 40                 - mov [rsp+40],rbx
+Octopath_Traveler0-Win64-Shipping.exe+47BB301: 8B 9F A0 04 00 00              - mov ebx,[rdi+000004A0]
+Octopath_Traveler0-Win64-Shipping.exe+47BB307: F2 0F 58 CA                    - addsd xmm1,xmm2
+Octopath_Traveler0-Win64-Shipping.exe+47BB30B: F2 48 0F 2C CA                 - cvttsd2si rcx,xmm2
+Octopath_Traveler0-Win64-Shipping.exe+47BB310: F2 0F 5C 0D 68 1B B5 01        - subsd xmm1,[Octopath_Traveler0-Win64-Shipping.exe+630CE80]
+Octopath_Traveler0-Win64-Shipping.exe+47BB318: 0F 28 C2                       - movaps xmm0,xmm2
+Octopath_Traveler0-Win64-Shipping.exe+47BB31B: F2 48 0F 2D C1                 - cvtsd2si rax,xmm1
+Octopath_Traveler0-Win64-Shipping.exe+47BB320: 0F 57 C9                       - xorps xmm1,xmm1
+Octopath_Traveler0-Win64-Shipping.exe+47BB323: 48 D1 F8                       - sar rax,1
+// ---------- INJECTING HERE ----------
+Octopath_Traveler0-Win64-Shipping.exe+47BB326: 03 87 70 04 00 00              - add eax,[rdi+00000470]
+// ---------- DONE INJECTING  ----------
+Octopath_Traveler0-Win64-Shipping.exe+47BB32C: 3B C3                          - cmp eax,ebx
+Octopath_Traveler0-Win64-Shipping.exe+47BB32E: 0F 4C D8                       - cmovl ebx,eax
+Octopath_Traveler0-Win64-Shipping.exe+47BB331: 48 B8 00 00 00 00 00 00 00 80  - mov rax,8000000000000000
+Octopath_Traveler0-Win64-Shipping.exe+47BB33B: 89 9F 70 04 00 00              - mov [rdi+00000470],ebx
+Octopath_Traveler0-Win64-Shipping.exe+47BB341: 48 3B C8                       - cmp rcx,rax
+Octopath_Traveler0-Win64-Shipping.exe+47BB344: 74 24                          - je Octopath_Traveler0-Win64-Shipping.exe+47BB36A
+Octopath_Traveler0-Win64-Shipping.exe+47BB346: 0F 57 C9                       - xorps xmm1,xmm1
+Octopath_Traveler0-Win64-Shipping.exe+47BB349: F2 48 0F 2A C9                 - cvtsi2sd xmm1,rcx
+Octopath_Traveler0-Win64-Shipping.exe+47BB34E: 66 0F 2E CA                    - ucomisd xmm1,xmm2
+Octopath_Traveler0-Win64-Shipping.exe+47BB352: 74 16                          - je Octopath_Traveler0-Win64-Shipping.exe+47BB36A
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
